@@ -1,0 +1,146 @@
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+import mysql.connector as mc
+from PyQt5.QtWidgets import QMessageBox
+
+class Ui_helplinepage(object):
+    def setupUi(self, helplinepage):
+        helplinepage.setObjectName("helplinepage")
+        helplinepage.resize(743, 600)
+        helplinepage.move(300,50)
+        helplinepage.setStyleSheet("background-color: rgb(7, 25, 104);")
+       
+       
+        self.centralwidget = QtWidgets.QWidget(helplinepage)
+        self.centralwidget.setObjectName("centralwidget")
+        self.table_helpline = QtWidgets.QTableWidget(self.centralwidget)
+        self.table_helpline.setGeometry(QtCore.QRect(20, 170, 691, 341))
+        self.table_helpline.setAutoFillBackground(False)
+        self.table_helpline.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(221, 221, 221);")
+        self.table_helpline.setShowGrid(True)
+        self.table_helpline.setWordWrap(True)
+        self.table_helpline.setRowCount(300)
+        self.table_helpline.setColumnCount(4)
+        self.table_helpline.setObjectName("table_helpline")
+        item = QtWidgets.QTableWidgetItem()
+        self.table_helpline.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_helpline.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_helpline.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_helpline.setHorizontalHeaderItem(3, item)
+        self.table_helpline.horizontalHeader().setDefaultSectionSize(160)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 791, 51))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        self.label.setFont(font)
+        self.label.setStyleSheet("background-color: rgb(3, 255, 201);")
+        self.label.setObjectName("label")
+        self.LineEdit_search = QtWidgets.QLineEdit(self.centralwidget)
+        self.LineEdit_search.setGeometry(QtCore.QRect(310, 80, 291, 31))
+        self.LineEdit_search.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.LineEdit_search.setObjectName("LineEdit_search")
+        self.btn_search = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_search.setGeometry(QtCore.QRect(170, 80, 131, 31))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_search.setFont(font)
+        self.btn_search.setStyleSheet("background-color: rgb(188, 188, 188);")
+        self.btn_search.setObjectName("btn_search")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(170, 0, 91, 51))
+        self.label_2.setText("")
+        self.label_2.setPixmap(QtGui.QPixmap("helpline_icon.jpg"))
+        self.label_2.setScaledContents(True)
+        self.label_2.setObjectName("label_2")
+        self.btn_load = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_load.setGeometry(QtCore.QRect(300, 130, 151, 31))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_load.setFont(font)
+        self.btn_load.setStyleSheet("background-color: rgb(188, 188, 188);")
+        self.btn_load.setObjectName("btn_load")
+        helplinepage.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(helplinepage)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 743, 21))
+        self.menubar.setObjectName("menubar")
+        helplinepage.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(helplinepage)
+        self.statusbar.setObjectName("statusbar")
+        helplinepage.setStatusBar(self.statusbar)
+
+        self.retranslateUi(helplinepage)
+        QtCore.QMetaObject.connectSlotsByName(helplinepage)
+       
+        self.btn_load.clicked.connect(self.load)
+        self.btn_search.clicked.connect(self.search)
+       
+        #self.lineEdit_search.setText(_translate("psych_viewcontact","ENTER NAME OF COUNTRYY"))
+       
+   
+    def load(self):
+       
+        self.LineEdit_search.clear()
+       
+        mycon=mc.connect(host='localhost', user='root', passwd='Saumya#237', database='ipproject')
+        cursor=mycon.cursor()
+        cursor.execute('select * from helpline')
+        result= cursor.fetchall()
+       
+        self.table_helpline.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.table_helpline.insertRow(row_number)
+            for coloumn_number, data in enumerate(row_data):
+                self.table_helpline.setItem(row_number, coloumn_number, QtWidgets.QTableWidgetItem(str(data)))
+   
+    def search(self):
+       
+        mycon=mc.connect(host='localhost', user='root', passwd='Saumya#237', database='ipproject')
+        cursor=mycon.cursor()
+        #search_text='%{}%'.format(self.lineEdit_search.text())
+        cursor.execute("select * from helpline where country like '%s' " %self.LineEdit_search.text() )
+        result= cursor.fetchall()
+       
+        self.table_helpline.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.table_helpline.insertRow(row_number)
+            for coloumn_number, data in enumerate(row_data):
+                self.table_helpline.setItem(row_number, coloumn_number, QtWidgets.QTableWidgetItem(str(data)))
+       
+
+
+    def retranslateUi(self, helplinepage):
+        _translate = QtCore.QCoreApplication.translate
+        helplinepage.setWindowTitle(_translate("helplinepage", "MainWindow"))
+        self.table_helpline.setSortingEnabled(False)
+        item = self.table_helpline.horizontalHeaderItem(0)
+        item.setText(_translate("helplinepage", "S.NO"))
+        item = self.table_helpline.horizontalHeaderItem(1)
+        item.setText(_translate("helplinepage", "Country"))
+        item = self.table_helpline.horizontalHeaderItem(2)
+        item.setText(_translate("helplinepage", "National helpine"))
+        item = self.table_helpline.horizontalHeaderItem(3)
+        item.setText(_translate("helplinepage", "Suicide helpline"))
+        self.label.setText(_translate("helplinepage", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">GLOBAL HELPLINE NUMBERS</span></p></body></html>"))
+        self.btn_search.setText(_translate("helplinepage", " SEARCH COUNTRY"))
+        self.btn_load.setText(_translate("helplinepage", " LOAD ALL RECORDS"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    helplinepage = QtWidgets.QMainWindow()
+    ui = Ui_helplinepage()
+    ui.setupUi(helplinepage)
+    helplinepage.show()
+    sys.exit(app.exec_())
+
