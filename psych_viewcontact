@@ -1,0 +1,144 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+import mysql.connector as mc
+from PyQt5.QtWidgets import QMessageBox
+
+class Ui_psych_viewcontact(object):
+    def setupUi(self, psych_viewcontact):
+        psych_viewcontact.setObjectName("psych_viewcontact")
+        psych_viewcontact.resize(765, 588)
+        psych_viewcontact.setStyleSheet("background-color: rgb(0, 0, 0);")
+        self.centralwidget = QtWidgets.QWidget(psych_viewcontact)
+        self.centralwidget.setObjectName("centralwidget")
+        self.img_back = QtWidgets.QLabel(self.centralwidget)
+        self.img_back.setGeometry(QtCore.QRect(6, 2, 781, 561))
+        self.img_back.setText("")
+        self.img_back.setPixmap(QtGui.QPixmap("how-to-ask-for-help-with-mental-health-care_1320W_JW-1.jpg"))
+        self.img_back.setScaledContents(True)
+        self.img_back.setObjectName("img_back")
+        self.table_psychcontact = QtWidgets.QTableWidget(self.centralwidget)
+        self.table_psychcontact.setGeometry(QtCore.QRect(20, 150, 731, 371))
+        self.table_psychcontact.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.table_psychcontact.setRowCount(200)
+        self.table_psychcontact.setColumnCount(8)
+        self.table_psychcontact.setObjectName("table_psychcontact")
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_psychcontact.setHorizontalHeaderItem(7, item)
+        self.btn_search = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_search.setGeometry(QtCore.QRect(190, 30, 121, 31))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_search.setFont(font)
+        self.btn_search.setStyleSheet("background-color: rgb(200, 200, 200);")
+        self.btn_search.setObjectName("btn_search")
+        self.lineEdit_search = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_search.setGeometry(QtCore.QRect(330, 30, 241, 31))
+        self.lineEdit_search.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.lineEdit_search.setObjectName("lineEdit_search")
+        self.btn_load = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_load.setGeometry(QtCore.QRect(270, 80, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_load.setFont(font)
+        self.btn_load.setStyleSheet("background-color: rgb(200, 200, 200);")
+        self.btn_load.setObjectName("btn_load")
+        psych_viewcontact.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(psych_viewcontact)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 765, 21))
+        self.menubar.setObjectName("menubar")
+        psych_viewcontact.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(psych_viewcontact)
+        self.statusbar.setObjectName("statusbar")
+        psych_viewcontact.setStatusBar(self.statusbar)
+
+        self.retranslateUi(psych_viewcontact)
+        QtCore.QMetaObject.connectSlotsByName(psych_viewcontact)
+       
+        self.btn_load.clicked.connect(self.load)
+        self.btn_search.clicked.connect(self.search)
+       
+        #self.lineEdit_search.setText(_translate("psych_viewcontact","ENTER NAME OF COUNTRYY"))
+       
+   
+    def load(self):
+       
+        self.lineEdit_search.clear()
+       
+        mycon=mc.connect(host='localhost', user='root', passwd='Saumya#237', database='ipproject')
+        cursor=mycon.cursor()
+        cursor.execute('select  psych_id, UCASE(name), age , UCASE(SUBSTRING(gender, 1,1)), UCASE(country), UCASE(state) , UCASE(address), UCASE(qualifications) from psych')
+        result= cursor.fetchall()
+       
+        self.table_psychcontact.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.table_psychcontact.insertRow(row_number)
+            for coloumn_number, data in enumerate(row_data):
+                self.table_psychcontact.setItem(row_number, coloumn_number, QtWidgets.QTableWidgetItem(str(data)))
+   
+    def search(self):
+       
+        mycon=mc.connect(host='localhost', user='root', passwd='Saumya#237', database='ipproject')
+        cursor=mycon.cursor()
+        #search_text='%{}%'.format(self.lineEdit_search.text())
+        cursor.execute("select * from psych where country like '%s' " %self.lineEdit_search.text() )
+        result= cursor.fetchall()
+       
+        self.table_psychcontact.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.table_psychcontact.insertRow(row_number)
+            for coloumn_number, data in enumerate(row_data):
+                self.table_psychcontact.setItem(row_number, coloumn_number, QtWidgets.QTableWidgetItem(str(data)))
+       
+
+    def retranslateUi(self, psych_viewcontact):
+        _translate = QtCore.QCoreApplication.translate
+        psych_viewcontact.setWindowTitle(_translate("psych_viewcontact", "MainWindow"))
+        item = self.table_psychcontact.horizontalHeaderItem(0)
+        item.setText(_translate("psych_viewcontact", "S.NO"))
+        item = self.table_psychcontact.horizontalHeaderItem(1)
+        item.setText(_translate("psych_viewcontact", "NAME"))
+        item = self.table_psychcontact.horizontalHeaderItem(2)
+        item.setText(_translate("psych_viewcontact", "AGE"))
+        item = self.table_psychcontact.horizontalHeaderItem(3)
+        item.setText(_translate("psych_viewcontact", "GENDER"))
+        item = self.table_psychcontact.horizontalHeaderItem(4)
+        item.setText(_translate("psych_viewcontact", "COUNTRY"))
+        item = self.table_psychcontact.horizontalHeaderItem(5)
+        item.setText(_translate("psych_viewcontact", "STATE"))
+        item = self.table_psychcontact.horizontalHeaderItem(6)
+        item.setText(_translate("psych_viewcontact", "ADDRESS"))
+        item = self.table_psychcontact.horizontalHeaderItem(7)
+        item.setText(_translate("psych_viewcontact", "QUALIFICATIONS"))
+        self.btn_search.setText(_translate("psych_viewcontact", "SEARCH"))
+        self.btn_load.setText(_translate("psych_viewcontact", "LOAD ALL RECORDS"))
+       
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    psych_viewcontact = QtWidgets.QMainWindow()
+    ui = Ui_psych_viewcontact()
+    ui.setupUi(psych_viewcontact)
+    psych_viewcontact.show()
+    sys.exit(app.exec_())
+
