@@ -1,0 +1,155 @@
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from psychpage import Ui_psychpage
+from helplinepage import Ui_helplinepage
+from graphpage import Ui_MainWindow
+from remediespage import Ui_remediespage
+
+class Ui_homepage(object):
+    def setupUi(self, homepage):
+        homepage.setObjectName("homepage")
+        homepage.resize(742, 676)
+        homepage.move(300,50)
+        homepage.setStyleSheet("background-color: rgb(19, 30, 49);\n"
+
+"background-color: rgb(0, 0, 0);")
+        self.centralwidget = QtWidgets.QWidget(homepage)
+        self.centralwidget.setObjectName("centralwidget")
+        #self.centralwidget.move(100,100)
+       
+        self.label_heading = QtWidgets.QLabel(self.centralwidget)
+        self.label_heading.setGeometry(QtCore.QRect(0, 0, 751, 71))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_heading.setFont(font)
+        self.label_heading.setAutoFillBackground(False)
+        self.label_heading.setStyleSheet("background-color: rgb(201, 194, 255);\n"
+"background-color: rgb(198, 226, 254);\n""")
+       
+        #self.centralwidget.setGeometry(8190,2, 742, 676)
+       
+        self.label_heading.setObjectName("label_heading")
+        self.btn_helplineno = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_helplineno.setGeometry(QtCore.QRect(0, 80, 151, 61))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_helplineno.setFont(font)
+        self.btn_helplineno.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_helplineno.setObjectName("btn_helplineno")
+        self.btn_psych = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_psych.setGeometry(QtCore.QRect(150, 80, 211, 61))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_psych.setFont(font)
+        self.btn_psych.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_psych.setObjectName("btn_psych")
+        self.btn_stats = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_stats.setGeometry(QtCore.QRect(360, 80, 181, 61))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_stats.setFont(font)
+        self.btn_stats.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_stats.setObjectName("btn_stats")
+        self.home_img = QtWidgets.QLabel(self.centralwidget)
+        self.home_img.setGeometry(QtCore.QRect(-10, 150, 751, 251))
+        self.home_img.setText("")
+        self.home_img.setPixmap(QtGui.QPixmap("spd7.jpg"))
+        self.home_img.setScaledContents(True)
+        self.home_img.setObjectName("home_img")
+        self.btn_prevent = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_prevent.setGeometry(QtCore.QRect(540, 80, 201, 61))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_prevent.setFont(font)
+        self.btn_prevent.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_prevent.setObjectName("btn_prevent")
+        self.sub_img2 = QtWidgets.QLabel(self.centralwidget)
+        self.sub_img2.setGeometry(QtCore.QRect(240, 410, 261, 221))
+        self.sub_img2.setText("")
+        self.sub_img2.setPixmap(QtGui.QPixmap("Suicide Warning signs.jpg"))
+        self.sub_img2.setScaledContents(True)
+        self.sub_img2.setObjectName("sub_img2")
+        self.sub_img3 = QtWidgets.QLabel(self.centralwidget)
+        self.sub_img3.setGeometry(QtCore.QRect(510, 410, 231, 221))
+        self.sub_img3.setText("")
+        self.sub_img3.setPixmap(QtGui.QPixmap("spd5.jpg"))
+        self.sub_img3.setScaledContents(True)
+        self.sub_img3.setObjectName("sub_img3")
+        self.sub_img1 = QtWidgets.QLabel(self.centralwidget)
+        self.sub_img1.setGeometry(QtCore.QRect(10, 410, 221, 221))
+        self.sub_img1.setText("")
+        self.sub_img1.setPixmap(QtGui.QPixmap("spd9.jpg"))
+        self.sub_img1.setScaledContents(True)
+        self.sub_img1.setObjectName("sub_img1")
+        homepage.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(homepage)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 742, 21))
+        self.menubar.setObjectName("menubar")
+        homepage.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(homepage)
+        self.statusbar.setObjectName("statusbar")
+        homepage.setStatusBar(self.statusbar)
+
+        self.retranslateUi(homepage)
+        QtCore.QMetaObject.connectSlotsByName(homepage)
+       
+        self.btn_psych.clicked.connect(self.openpsychpage)
+        self.btn_helplineno.clicked.connect(self.openhelplinepage)
+        self.btn_stats.clicked.connect(self.opengraphpage)
+        self.btn_prevent.clicked.connect(self.openremediespage)
+       
+    def openpsychpage(self):
+        self.psychpage = QtWidgets.QMainWindow()
+        self.ui = Ui_psychpage()
+        self.ui.setupUi(self.psychpage)
+        self.psychpage.show()
+           
+    def openhelplinepage(self):
+        self.helplinepage = QtWidgets.QMainWindow()
+        self.ui = Ui_helplinepage()
+        self.ui.setupUi(self.helplinepage)
+        self.helplinepage.show()
+       
+    def opengraphpage(self):
+            self.MainWindow = QtWidgets.QMainWindow()
+            self.ui = Ui_MainWindow()
+            self.ui.setupUi(self.MainWindow)
+            self.MainWindow.show()
+           
+    def openremediespage(self):
+            self.remediespage = QtWidgets.QMainWindow()
+            self.ui = Ui_remediespage()
+            self.ui.setupUi(self.remediespage)
+            self.remediespage.show()
+
+
+
+    def retranslateUi(self, homepage):
+        _translate = QtCore.QCoreApplication.translate
+        homepage.setWindowTitle(_translate("homepage", "MainWindow"))
+        self.label_heading.setText(_translate("homepage", "<html><head/><body><p align=\"center\">MENTAL HEALTH ORGANISATION</p></body></html>"))
+        self.btn_helplineno.setText(_translate("homepage", "HELPLINE NUMBERS"))
+        self.btn_psych.setText(_translate("homepage", "RECOMMENDED PSYCHIATRISTS"))
+        self.btn_stats.setText(_translate("homepage", "SUCIDE RATES"))
+        self.btn_prevent.setText(_translate("homepage", " REMEDIATION STRATEGIES"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    homepage = QtWidgets.QMainWindow()
+    ui = Ui_homepage()
+    ui.setupUi(homepage)
+    homepage.show()
+    sys.exit(app.exec_())
