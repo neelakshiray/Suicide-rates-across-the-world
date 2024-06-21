@@ -1,0 +1,102 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(786, 597)
+        MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.data_label = QtWidgets.QLabel(self.centralwidget)
+        self.data_label.setGeometry(QtCore.QRect(0, 5, 791, 41))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setBold(True)
+        font.setWeight(75)
+        self.data_label.setFont(font)
+        self.data_label.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.data_label.setObjectName("data_label")
+        self.data_img = QtWidgets.QLabel(self.centralwidget)
+        self.data_img.setGeometry(QtCore.QRect(-10, 60, 791, 261))
+        self.data_img.setText("")
+        self.data_img.setPixmap(QtGui.QPixmap("data2.png"))
+        self.data_img.setScaledContents(True)
+        self.data_img.setObjectName("data_img")
+        self.btn_nopergen_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_nopergen_2.setGeometry(QtCore.QRect(20, 360, 751, 41))
+        self.btn_nopergen_2.setStyleSheet("background-color: rgb(222, 222, 222);")
+        self.btn_nopergen_2.setObjectName("btn_nopergen_2")
+        self.btn_noperyear = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_noperyear.setGeometry(QtCore.QRect(20, 400, 751, 41))
+        self.btn_noperyear.setStyleSheet("background-color: rgb(222, 222, 222);")
+        self.btn_noperyear.setObjectName("btn_noperyear")
+        self.btn_nopercount = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_nopercount.setGeometry(QtCore.QRect(20, 440, 751, 41))
+        self.btn_nopercount.setStyleSheet("background-color: rgb(222, 222, 222);")
+        self.btn_nopercount.setObjectName("btn_nopercount")
+        self.btn_yeargen = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_yeargen.setGeometry(QtCore.QRect(20, 480, 751, 41))
+        self.btn_yeargen.setStyleSheet("background-color: rgb(222, 222, 222);")
+        self.btn_yeargen.setObjectName("btn_yeargen")
+        self.btn_noperage_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_noperage_2.setGeometry(QtCore.QRect(20, 320, 751, 41))
+        self.btn_noperage_2.setStyleSheet("background-color: rgb(222, 222, 222);")
+        self.btn_noperage_2.setObjectName("btn_noperage_2")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 530, 781, 21))
+        self.label.setStyleSheet("background-color: rgb(11, 1, 70);\n"
+"")
+        self.label.setObjectName("label")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 786, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+       
+        self.btn_nopergen_2.clicked.connect(self.shownopergender)
+        self.btn_noperyear.clicked.connect(self.shownoperyear)
+        self.btn_nopercount.clicked.connect(self.shownopercountry)
+        self.btn_yeargen.clicked.connect(self.showyearpergender)
+        self.btn_noperage_2.clicked.connect(self.shownoperage)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.data_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600;\">DATA ANALYSIS OF SUICIDE RATES</span></p></body></html>"))
+        self.btn_nopergen_2.setText(_translate("MainWindow", "SUICIDE NUMBER PER GENDER"))
+        self.btn_noperyear.setText(_translate("MainWindow", "SUICIDE RATES PER YEAR"))
+        self.btn_nopercount.setText(_translate("MainWindow", "SUICIDE NUMBER PER COUNTRY"))
+        self.btn_yeargen.setText(_translate("MainWindow", "SUICIDE NUMBER PER YEAR BY GENDER"))
+        self.btn_noperage_2.setText(_translate("MainWindow", "SUICIDE NUMBER PER AGE GROUP"))
+        self.label.setText(_translate("MainWindow", "TextLabel"))
+
+    def shownopergender(self):
+        self.data_img.setPixmap(QtGui.QPixmap("sexnumber.png"))
+    def shownoperyear(self):
+        self.data_img.setPixmap(QtGui.QPixmap("yearnumber.png"))
+                               
+    def shownopercountry(self):
+        self.data_img.setPixmap(QtGui.QPixmap("countrynumber.png"))
+                               
+    def showyearpergender(self):
+        self.data_img.setPixmap(QtGui.QPixmap("yeargender.png"))
+                               
+    def shownoperage(self):
+        self.data_img.setPixmap(QtGui.QPixmap("agenumber.png"))
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+
