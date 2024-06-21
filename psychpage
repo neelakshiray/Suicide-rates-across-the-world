@@ -1,0 +1,100 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from psych_addcontact import Ui_psych_addcontact
+from psych_viewcontact import Ui_psych_viewcontact
+
+class Ui_psychpage(object):
+    def setupUi(self, psychpage):
+        psychpage.setObjectName("psychpage")
+        psychpage.resize(742, 676)
+        psychpage.move(300,50)
+       
+        psychpage.setStyleSheet("background-color: rgb(0, 4, 52);")
+        self.centralwidget = QtWidgets.QWidget(psychpage)
+        self.centralwidget.setObjectName("centralwidget")
+        self.img_psychcover = QtWidgets.QLabel(self.centralwidget)
+        self.img_psychcover.setGeometry(QtCore.QRect(-30, 70, 800, 400))
+        self.img_psychcover.setText("")
+        self.img_psychcover.setPixmap(QtGui.QPixmap("psych cover.jpg"))
+        self.img_psychcover.setScaledContents(True)
+        self.img_psychcover.setObjectName("img_psychcover")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(-10, 20, 800, 51))
+        font = QtGui.QFont()
+        font.setFamily("Century")
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_3.setFont(font)
+        self.label_3.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.label_3.setObjectName("label_3")
+        self.btn_viewpsych = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_viewpsych.setGeometry(QtCore.QRect(360, 380, 181, 51))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_viewpsych.setFont(font)
+        self.btn_viewpsych.setStyleSheet("background-color: rgb(211, 211, 211);")
+        self.btn_viewpsych.setObjectName("btn_viewpsych")
+        self.btn_addpsych = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_addpsych.setGeometry(QtCore.QRect(550, 380, 151, 51))
+        font = QtGui.QFont()
+        font.setFamily("Palatino Linotype")
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_addpsych.setFont(font)
+        self.btn_addpsych.setStyleSheet("background-color: rgb(211, 211, 211);")
+        self.btn_addpsych.setObjectName("btn_addpsych")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(-20, 450, 800, 61))
+        font = QtGui.QFont()
+        font.setFamily("Mongolian Baiti")
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("background-color: rgb(201, 194, 255);\n"
+"background-color: rgb(198, 226, 254);")
+        self.label_2.setObjectName("label_2")
+        psychpage.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(psychpage)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 707, 21))
+        self.menubar.setObjectName("menubar")
+        psychpage.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(psychpage)
+        self.statusbar.setObjectName("statusbar")
+        psychpage.setStatusBar(self.statusbar)
+
+        self.retranslateUi(psychpage)
+        QtCore.QMetaObject.connectSlotsByName(psychpage)
+       
+       
+        self.btn_addpsych.clicked.connect(self.openpsych_addcontact)
+        self.btn_viewpsych.clicked.connect(self.openpsych_viewcontact)
+       
+       
+    def openpsych_addcontact(self):
+            self.psych_addcontact = QtWidgets.QMainWindow()
+            self.ui = Ui_psych_addcontact()
+            self.ui.setupUi(self.psych_addcontact)
+            self.psych_addcontact.show()
+           
+    def openpsych_viewcontact(self):
+            self.psych_viewcontact = QtWidgets.QMainWindow()
+            self.ui = Ui_psych_viewcontact()
+            self.ui.setupUi(self.psych_viewcontact)
+            self.psych_viewcontact.show()
+
+    def retranslateUi(self, psychpage):
+        _translate = QtCore.QCoreApplication.translate
+        psychpage.setWindowTitle(_translate("psychpage", "MainWindow"))
+        self.label_3.setText(_translate("psychpage", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">DON\'T DELAY, ASK FOR HELP TODAY.</span></p></body></html>"))
+        self.btn_viewpsych.setText(_translate("psychpage", "FIND A PSYCHIATRIST NEARBY"))
+        self.btn_addpsych.setText(_translate("psychpage", "ADD YOUR CONTACT"))
+        self.label_2.setText(_translate("psychpage", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">HEY THERE, YOU ARE NOT ALONE! :)</span></p></body></html>"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    psychpage = QtWidgets.QMainWindow()
+    ui = Ui_psychpage()
+    ui.setupUi(psychpage)
+    psychpage.show()
+    sys.exit(app.exec_())
