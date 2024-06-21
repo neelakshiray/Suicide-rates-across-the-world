@@ -1,0 +1,122 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from homepage import Ui_homepage
+from PyQt5.QtWidgets import QMessageBox
+import mysql.connector as mc
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(602, 452)
+        MainWindow.move(320,150)
+        MainWindow.setStyleSheet("background-color: rgb(0, 0, 0);")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+       
+        self.bck_img = QtWidgets.QLabel(self.centralwidget)
+        self.bck_img.setGeometry(QtCore.QRect(-80, -10, 701, 441))
+        self.bck_img.setText("")
+        self.bck_img.setPixmap(QtGui.QPixmap("spd7.jpg"))
+        self.bck_img.setScaledContents(True)
+        self.bck_img.setObjectName("bck_img")
+        self.label_username = QtWidgets.QLabel(self.centralwidget)
+        self.label_username.setGeometry(QtCore.QRect(110, 170, 171, 41))
+        self.label_username.setObjectName("label_username")
+        self.label_pswd = QtWidgets.QLabel(self.centralwidget)
+        self.label_pswd.setGeometry(QtCore.QRect(110, 220, 171, 41))
+        self.label_pswd.setObjectName("label_pswd")
+        self.label_pswd2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_pswd2.setGeometry(QtCore.QRect(110, 270, 171, 41))
+        self.label_pswd2.setObjectName("label_pswd2")
+        self.lineEdit_username = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_username.setGeometry(QtCore.QRect(300, 170, 191, 31))
+        self.lineEdit_username.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.lineEdit_username.setObjectName("lineEdit_username")
+        self.lineEdit_pswd = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_pswd.setGeometry(QtCore.QRect(300, 220, 191, 31))
+        self.lineEdit_pswd.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.lineEdit_pswd.setObjectName("lineEdit_pswd")
+        self.lineEdit_pswd2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_pswd2.setGeometry(QtCore.QRect(300, 270, 191, 31))
+        self.lineEdit_pswd2.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.lineEdit_pswd2.setObjectName("lineEdit_pswd2")
+        self.clear_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.clear_btn.setGeometry(QtCore.QRect(160, 330, 111, 31))
+        self.clear_btn.setStyleSheet("background-color: rgb(188, 188, 188);")
+        self.clear_btn.setObjectName("clear_btn")
+        self.home_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.home_btn.setGeometry(QtCore.QRect(310, 330, 111, 31))
+        self.home_btn.setStyleSheet("background-color: rgb(188, 188, 188);")
+        self.home_btn.setObjectName("home_btn")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 602, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+       
+        self.lineEdit_pswd.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_pswd2.setEchoMode(QtWidgets.QLineEdit.Password)
+       
+        self.clear_btn.clicked.connect(self.clearwindow)
+        self.home_btn.clicked.connect(self.openhomepage)
+       
+       
+    def clearwindow(self):
+        self.lineEdit_username.clear()
+        self.lineEdit_pswd.clear()
+        self.lineEdit_pswd2.clear()
+   
+    def openhomepage(self):
+       
+        if self.lineEdit_pswd.text()==self.lineEdit_pswd2.text():
+            self.connection()
+            self.homepage = QtWidgets.QMainWindow()
+            self.ui = Ui_homepage()
+            self.ui.setupUi(self.homepage)
+            self.homepage.show()
+            #self.MainWindow_app2.hide()
+       
+        else:
+            msg=QMessageBox()
+            msg.setWindowTitle('ERROR')
+            msg.setText('passwords dont match')
+            msg.setIcon(QMessageBox.Warning)
+            msg.setStandardButtons(QMessageBox.Ok)
+            x=msg.exec_()
+   
+    def connection(self):
+            mycon=mc.connect(host='localhost', user=self.lineEdit_username.text(), passwd= self.lineEdit_pswd.text(), db='ipproject')
+           
+
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label_username.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600; color:#ffffff;\">USERNAME:</span></p></body></html>"))
+       
+       
+        self.label_pswd.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#ffffff;\">PASSWORD:</span></p></body></html>"))
+        self.label_pswd2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#ffffff;\">CONFIRM PASSWORD</span></p></body></html>"))
+        self.clear_btn.setText(_translate("MainWindow", "CLEAR"))
+        self.home_btn.setText(_translate("MainWindow", "GO TO HOME PAGE"))
+        self.lineEdit_username.setText(_translate("MainWindow","root"))
+        self.lineEdit_pswd.setText(_translate("MainWindow","Saumya#237"))
+        self.lineEdit_pswd2.setText(_translate("MainWindow","Saumya#237"))
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
